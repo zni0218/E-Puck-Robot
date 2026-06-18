@@ -1,0 +1,177 @@
+
+PROJECT INSTALLATION AND EXECUTION INSTRUCTIONS
+
+1. REQUIREMENTS AND ENVIRONMENT
+-------------------------------
+- Recommended Python version: 3.10–3.11
+- Webots R2021b or later
+- The project must be executed on Windows 10 and/or Linux 20.04.6 LTS (Focal Fossa)
+
+Create and activate a virtual environment:
+
+Windows PowerShell:
+  python -m venv .venv
+  .\.venv\Scripts\Activate.ps1
+
+Windows CMD:
+  python -m venv .venv
+  .\.venv\Scripts\activate
+
+Linux:
+  python3 -m venv .venv
+  source .venv/bin/activate
+
+Upgrade pip:
+  python -m pip install --upgrade pip
+
+2. INSTALL DEPENDENCIES
+-----------------------
+Install the required Python packages from the root of the project:
+
+  pip install -r requirements.txt
+
+Notes:
+- Installation may take some time because of packages such as PyTorch, TensorFlow, and OpenCV.
+- If GPU support is used, make sure the installed versions are compatible with the CUDA drivers.
+
+3. RECOMMENDED FOLDER STRUCTURE
+-------------------------------
+project_root/
+├─ EPUCK_PARKING_final/
+│  ├─ dstar_parking/
+│  │  ├─ d_star_lite.py
+│  │  ├─ dstar_parking.py
+│  │  ├─ grid.py
+│  │  ├─ iri_utils.py
+│  │  ├─ navigator.py
+│  │  ├─ parking_map.py
+│  │  ├─ parking_other_epucks.py
+│  │  ├─ path_follower.py
+│  │  ├─ priority_queue.py
+│  │  └─ utils.py
+│  │  └─ worlds/
+│  │     ├─ .Project_Dlite.wbproj
+│  │     ├─ .Scenario1.jpg
+│  │     ├─ .Scenario1.wbproj
+│  │     ├─ Scenario1.wbt
+│  │     ├─ Scenario1.png
+│  │     ├─ Scenario1_config.yaml
+│  │     ├─ Scenario1_points.csv
+│  │     └─ base_map.wbt
+│  ├─ EPUCK_PARKING_final/
+│  │  ├─ Mapas/
+│  │  │  ├─ .Mapa_with_defs.jpg
+│  │  │  ├─ .Mapa_with_defs.wbproj
+│  │  │  └─ Mapa_with_defs.wbt
+│  │  ├─ controllers/
+│  │  │  ├─ .idea/
+│  │  │  │  └─ ...
+│  │  │  ├─ create_map.py
+│  │  │  ├─ localization_utils.py
+│  │  │  ├─ print_devices.py
+│  │  │  ├─ transformations.py
+│  │  │  └─ utils.py
+│  │  │  ├─ eval_logs/
+│  │  │  │  └─ evaluations.npz
+│  │  │  ├─ tensorboard_logs/
+│  │  │  │  └─ ...
+│  │  │  └─ monitor.csv
+│  │  ├─ logs/new_model/
+│  │  │  ├─ best_model/
+│  │  │  │  └─ best_model.zip
+│  │  │  ├─ eval_logs/
+│  │  │  │  └─ evaluations.npz
+│  │  │  ├─ tensorboard_logs/
+│  │  │  │  └─ ...
+│  │  │  └─ monitor.csv
+│  │  ├─ logs_sac/parking_sac/
+│  │  │  ├─ best_model/
+│  │  │  │  └─ best_model.zip
+│  │  │  ├─ eval_logs/
+│  │  │  │  └─ evaluations.npz
+│  │  │  ├─ tensorboard_logs/20260618-004846_1/
+│  │  │  │  └─ events.out.tfevents.1781740126.Ni-HpPav
+│  │  │  └─ monitor.csv
+│  │  ├─ logs_td3/parking_td3/
+│  │  │  ├─ best_model/
+│  │  │  │  └─ best_model.zip
+│  │  │  ├─ eval_logs/
+│  │  │  │  └─ evaluations.npz
+│  │  │  ├─ tensorboard_logs/20260618-024601_1/
+│  │  │  │  └─ events.out.tfevents.1781747161.Ni-HpPav
+│  │  │  └─ monitor.csv
+│  │  ├─ EPuckLidarParkingEnv.py
+│  │  ├─ EPuckLidarParkingEnvSAC.py
+│  │  ├─ inference.py
+│  │  ├─ positions.py
+│  │  ├─ trainingPPO.py
+│  │  ├─ trainingSAC.py
+│  │  ├─ trainingTD3.py
+│  │  ├─ transformations.py
+│  │  └─ utils.py
+└─ models/
+
+Important:
+The controller scripts must use relative paths based on the file location and search for world files in `../worlds` or using `os.path.join(os.path.dirname(__file__), "worlds")`.
+
+4. OPEN WEBOTS AND LOAD Scenario1.wbt
+-------------------------------------
+- Open the Webots GUI.
+- Go to File → Open World.
+- Select `project_root/worlds/Scenario1.wbt`.
+- In the Scene Tree, confirm that the EPUCK controller is set to `dstar_parking` or to the correct controller name.
+- Press Play. Webots will execute the Python controller.
+- If Webots is not using the virtual environment Python interpreter, adjust Preferences → Python or set `WEBOTS_PYTHON` to point to `project_root\.venv\Scripts\python.exe`.
+
+5. RUN dstar_parking.py
+-----------------------
+- Normally, the script is executed as a controller inside Webots (Supervisor).
+- To run it as a controller: open the world in Webots and press Play.
+- For tests outside Webots, the script would need to be adapted to a test mode or to a sensor simulation.
+
+6. TRAIN PPO, SAC AND TD3 MODELS
+---------------------------------
+Prerequisites:
+- Python environment with the dependencies installed
+- `models/` and `logs/` folders created
+
+Run the scripts using right click on the file and choose Run 'code'.
+
+Examples:
+  python trainingPPO.py
+  python trainingSAC.py
+  python trainingTD3.py
+
+Notes:
+- Adjust `--total-timesteps` according to the available resources.
+- Use periodic checkpoints to avoid losing progress.
+- Monitor training with TensorBoard if the scripts write logs:
+
+  tensorboard --logdir logs/
+
+7. INFERENCE AND TESTING
+------------------------
+Example command:
+
+  python inference.py --model models/ppo/latest.zip --env Scenario1Env --render True
+
+Replace `--model` with the desired model file, such as SAC or TD3.
+
+Check whether the Webots world must be open for the inference mode you use.
+
+8. GOOD PRACTICES AND TROUBLESHOOTING
+-------------------------------------
+- Verify that `Scenario1.png` and `Scenario1_config.yaml` are inside `worlds/`.
+- Use relative paths:
+    HERE = os.path.dirname(__file__)
+    PATH = os.path.join(HERE, "worlds")
+- Common errors:
+  - FileNotFoundError → wrong path; print `os.path.abspath(...)` for debugging
+  - Dependency installation failure → try installing packages individually and read the error message
+  - Webots uses a different Python interpreter → adjust Webots preferences or export `WEBOTS_PYTHON`
+- Performance:
+  - Training RL in simulation is slow; use multiple environments if supported or accelerate the simulator
+- Reproducibility:
+  - fix seeds (numpy, random, frameworks) and save dependency versions:
+
+    pip freeze > installed.txt
