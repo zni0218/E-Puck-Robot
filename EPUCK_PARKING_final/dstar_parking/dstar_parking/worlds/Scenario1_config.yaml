@@ -1,0 +1,8 @@
+image: Scenario1.png
+resolution: 0.008
+origin: [0.00,0.00,0.00]
+occupied_thresh: 0.65
+
+# CANTO SUPERIOR ESQUERDO = [0.87, 2.41, 0.000000]
+# Original = [0.000, 0.0000, 0.000000]
+# lugares de estacionamento 20 de comprimento, 18 de altura
