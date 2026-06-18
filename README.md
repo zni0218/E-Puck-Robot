@@ -45,51 +45,97 @@ pip install -r requirements.txt
 ## Estrutura do projeto
 
 project_root/
+
 ├─ EPUCK_PARKING_final/
+
 │  ├─ dstar_parking/
+
 │  │  ├─ d_star_lite.py
+
 │  │  ├─ dstar_parking.py
+
 │  │  ├─ grid.py
+
 │  │  ├─ iri_utils.py
+
 │  │  ├─ navigator.py
+
 │  │  ├─ parking_map.py
+
 │  │  ├─ parking_other_epucks.py
+
 │  │  ├─ path_follower.py
+
 │  │  ├─ priority_queue.py
+
 │  │  ├─ utils.py
+
 │  │  └─ worlds/
+
 │  │     ├─ .Project_Dlite.wbproj
+
 │  │     ├─ .Scenario1.jpg
+
 │  │     ├─ .Scenario1.wbproj
+
 │  │     ├─ Scenario1.wbt
+
 │  │     ├─ Scenario1.png
+
 │  │     ├─ Scenario1_config.yaml
+
 │  │     ├─ Scenario1_points.csv
+
 │  │     └─ base_map.wbt
+
 │  ├─ controllers/
+
 │  │  ├─ create_map.py
+
 │  │  ├─ localization_utils.py
+
 │  │  ├─ print_devices.py
+
 │  │  ├─ transformations.py
+
 │  │  ├─ utils.py
+
 │  │  ├─ eval_logs/
+
 │  │  ├─ tensorboard_logs/
+
 │  │  └─ monitor.csv
+
 │  ├─ logs/
+
 │  │  ├─ new_model/
+
 │  │  ├─ logs_sac/
+
 │  │  └─ logs_td3/
+
 │  ├─ models/
+
 │  ├─ EPuckLidarParkingEnv.py
+
 │  ├─ EPuckLidarParkingEnvSAC.py
+
 │  ├─ inference.py
+
 │  ├─ positions.py
+
 │  ├─ trainingPPO.py
+
 │  ├─ trainingSAC.py
+
 │  ├─ trainingTD3.py
+
 │  ├─ transformations.py
+
 │  └─ utils.py
+
 └─ models/
+
 
 ---
 
